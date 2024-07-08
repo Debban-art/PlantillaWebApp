@@ -21,7 +21,7 @@ namespace reportesApi.Controllers
     public class GrupoMateriaController: ControllerBase
     {
    
-        private readonly GrupoAlumnoService _GrupoMateriaService;
+        private readonly GrupoMateriaService _GrupoMateriaService;
         private readonly ILogger<GrupoMateriaController> _logger;
   
         private readonly IJwtAuthenticationService _authService;
