@@ -30,7 +30,7 @@ namespace reportesApi.Controllers
 
         Encrypt enc = new Encrypt();
 
-        public GrupoMateriaController(GrupoM GrupoMateriaService, ILogger<GrupoMateriaController> logger, IJwtAuthenticationService authService) {
+        public GrupoMateriaController(GrupoMateria GrupoMateriaService, ILogger<GrupoMateriaController> logger, IJwtAuthenticationService authService) {
             _GrupoMateriaService = GrupoMateriaService;
             _logger = logger;
        
