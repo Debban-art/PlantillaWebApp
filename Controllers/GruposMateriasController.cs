@@ -64,7 +64,7 @@ namespace reportesApi.Controllers
         }
 
          [HttpPost("InsertGruposMaterias")]
-        public IActionResult InsertGruposMaterias([FromBody] GruposMateriasService gm)
+        public IActionResult InsertGruposMaterias([FromBody] GruposMateriasModel gm)
         {
 
 
