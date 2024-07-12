@@ -43,7 +43,7 @@ namespace reportesApi.Controllers
         }
 
 
-        [HttpPost("sp_insert_gruposalumnos")]
+        [HttpPost("InsertGrupoAlumno")]
         public IActionResult InsertGrupoAlumno([FromBody] InsertGrupoAlumnoModel req )
         {
             var objectResponse = Helper.GetStructResponse();
@@ -63,8 +63,8 @@ namespace reportesApi.Controllers
             return new JsonResult(objectResponse);
         }
 
-        [HttpGet("[sp_get_gruposalumnos")]
-        public IActionResult GetGrupoAlumno()
+        [HttpGet("GetGruposAlumnos")]
+        public IActionResult GetGruposAlumnos()
         {
             var objectResponse = Helper.GetStructResponse();
             try
@@ -88,8 +88,8 @@ namespace reportesApi.Controllers
             return new JsonResult(objectResponse);
         }
 
-        [HttpPut("sp_update_gruposalumnos")]
-        public IActionResult UpdateGrupoAlumno([FromBody] UpdateGrupoAlumnoModel req )
+        [HttpPut("UpdateGruposAlumnos")]
+        public IActionResult UpdateGruposAlumnos([FromBody] UpdateGrupoAlumnoModel req )
         {
             var objectResponse = Helper.GetStructResponse();
             try
@@ -110,7 +110,7 @@ namespace reportesApi.Controllers
             return new JsonResult(objectResponse);
         }
 
-        [HttpDelete("sp_delete_gruposalumnos")]
+        [HttpDelete("DeleteGrupoAlumno")]
         public IActionResult DeleteGrupoAlumno([FromBody] int id )
         {
             var objectResponse = Helper.GetStructResponse();
