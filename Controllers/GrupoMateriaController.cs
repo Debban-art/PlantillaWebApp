@@ -18,11 +18,11 @@ namespace reportesApi.Controllers
 {
    
     [Route("api")]
-    public class MateriaController: ControllerBase
+    public class GrupoMateriaController: ControllerBase
     {
    
-        private readonly MateriaService _MateriaService;
-        private readonly ILogger<MateriaController> _logger;
+        private readonly GrupoMateriaService _GrupoMateriaService;
+        private readonly ILogger<GrupoMateriaController> _logger;
   
         private readonly IJwtAuthenticationService _authService;
         private readonly IWebHostEnvironment _hostingEnvironment;
@@ -30,8 +30,8 @@ namespace reportesApi.Controllers
 
         Encrypt enc = new Encrypt();
 
-        public MateriaController(MateriaService MateriaService, ILogger<MateriaController> logger, IJwtAuthenticationService authService) {
-            _MateriaService = MateriaService;
+        public GrupoMateriaController(GrupoMateriaService GrupoMateriaService, ILogger<GrupoMateriaController> logger, IJwtAuthenticationService authService) {
+            _GrupoMateriaService = GrupoMateriaService;
             _logger = logger;
        
             _authService = authService;
@@ -43,15 +43,15 @@ namespace reportesApi.Controllers
         }
 
 
-        [HttpPost("InsertMateria")]
-        public IActionResult InsertMaterias([FromBody] InsertMateriaModel req )
+        [HttpPost("InsertGrupoMateria")]
+        public IActionResult InsertGrupoMateria([FromBody] InsertGrupoMateriaModel req )
         {
             var objectResponse = Helper.GetStructResponse();
             try
             {
                 objectResponse.StatusCode = (int)HttpStatusCode.OK;
                 objectResponse.success = true;
-                objectResponse.message = _MateriaService.InsertMateria(req);
+                objectResponse.message = _GrupoMateriaService.InsertGrupoMateria(req);
 
             }
 
@@ -63,8 +63,8 @@ namespace reportesApi.Controllers
             return new JsonResult(objectResponse);
         }
 
-        [HttpGet("GetMaterias")]
-        public IActionResult GetMaterias()
+        [HttpGet("GetGruposMaterias")]
+        public IActionResult GetGruposMaterias()
         {
             var objectResponse = Helper.GetStructResponse();
             try
@@ -76,7 +76,7 @@ namespace reportesApi.Controllers
 
                 // Llamando a la función y recibiendo los dos valores.
                 
-                 var resultado = _MateriaService.GetMaterias();
+                 var resultado = _GrupoMateriaService.GetGrupoMateria();
                  objectResponse.response = resultado;
             }
 
@@ -88,15 +88,15 @@ namespace reportesApi.Controllers
             return new JsonResult(objectResponse);
         }
 
-        [HttpPut("UpdateMateria")]
-        public IActionResult UpdateMaterias([FromBody] UpdateMateriaModel req )
+        [HttpPut("UpdateGrupoMateria")]
+        public IActionResult UpdateGruposMaterias([FromBody] UpdateGrupoMateriaModel req )
         {
             var objectResponse = Helper.GetStructResponse();
             try
             {
                 objectResponse.StatusCode = (int)HttpStatusCode.OK;
                 objectResponse.success = true;
-                objectResponse.message = _MateriaService.UpdateMateria(req);
+                objectResponse.message = _GrupoMateriaService.UpdateGrupoMateria(req);
 
                 ;
 
@@ -110,8 +110,8 @@ namespace reportesApi.Controllers
             return new JsonResult(objectResponse);
         }
 
-        [HttpDelete("DeleteMateria/{id}")]
-        public IActionResult DeleteMateria([FromRoute] int id )
+        [HttpDelete("DeleteGrupoMateria/{id}")]
+        public IActionResult DeleteGrupoMateria([FromRoute] int id )
         {
             var objectResponse = Helper.GetStructResponse();
             try
@@ -120,7 +120,7 @@ namespace reportesApi.Controllers
                 objectResponse.success = true;
                 objectResponse.message = "data cargado con exito";
 
-                _MateriaService.DeleteMateria(id);
+                _GrupoMateriaService.DeleteGrupoMateria(id);
 
             }
 

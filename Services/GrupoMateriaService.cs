@@ -15,14 +15,14 @@ using System.Linq;
 using System.Text;
 namespace reportesApi.Services
 {
-    public class CarreraService
+    public class GrupoMateriaService
     {
         private  string connection;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private ArrayList parametros = new ArrayList();
 
 
-        public CarreraService(IMarcatelDatabaseSetting settings, IWebHostEnvironment webHostEnvironment)
+        public GrupoMateriaService(IMarcatelDatabaseSetting settings, IWebHostEnvironment webHostEnvironment)
         {
              connection = settings.ConnectionString;
 
@@ -30,24 +30,25 @@ namespace reportesApi.Services
              
         }
 
-        public List<GetCarreraModel> GetCarreras()
+        public List<GetGrupoMateriaModel> GetGrupoMateria()
         {
             ConexionDataAccess dac = new ConexionDataAccess(connection);
-            GetCarreraModel persona = new GetCarreraModel();
+            GetGrupoMateriaModel persona = new GetGrupoMateriaModel();
 
-            List<GetCarreraModel> lista = new List<GetCarreraModel>();
+            List<GetGrupoMateriaModel> lista = new List<GetGrupoMateriaModel>();
             try
             {
                 parametros = new ArrayList();
-                DataSet ds = dac.Fill("sp_get_carreras", parametros);
+                DataSet ds = dac.Fill("sp_get_grupomaterias", parametros);
                 if (ds.Tables[0].Rows.Count > 0)
                 {
 
                   lista = ds.Tables[0].AsEnumerable()
-                    .Select(dataRow => new GetCarreraModel {
-                        Id = int.Parse(dataRow["Id"].ToString()),
-                        NombreCarrera = dataRow["Carrera"].ToString(),
-                        Abreviatura = dataRow["Abreviatura"].ToString(),
+                    .Select(dataRow => new GetGrupoMateriaModel {
+                        Id = int.Parse(dataRow["id"].ToString()),
+                        Grupo = dataRow["Clave"].ToString(),
+                        Materia = dataRow["NombreMateria"].ToString(),
+                        Carrera = dataRow["NombreCarrera"].ToString(),
                         Estatus = dataRow["Estatus"].ToString(),
                         UsuarioRegistra = dataRow["UsuarioRegistra"].ToString(),
                         FechaRegistro= dataRow["FechaRegistro"].ToString()
@@ -61,54 +62,54 @@ namespace reportesApi.Services
             return lista;
         }
 
-        public void InsertCarrera(InsertCarreraModel carrera)
+        public string InsertGrupoMateria(InsertGrupoMateriaModel GrupoMateria)
         {
             ConexionDataAccess dac = new ConexionDataAccess(connection);
             parametros = new ArrayList();
             string mensaje;
 
-            parametros.Add(new SqlParameter { ParameterName = "@pCarrera", SqlDbType = System.Data.SqlDbType.VarChar, Value = carrera.NombreCarrera });
-           
-            parametros.Add(new SqlParameter { ParameterName = "@pAbreviatura", SqlDbType = System.Data.SqlDbType.VarChar, Value = carrera.Abreviatura });
-            parametros.Add(new SqlParameter { ParameterName = "@pUsuarioRegistra", SqlDbType = System.Data.SqlDbType.Int, Value = 1 });
+            parametros.Add(new SqlParameter { ParameterName = "@pIdGrupo", SqlDbType = System.Data.SqlDbType.Int, Value = GrupoMateria.IdGrupo });
+            parametros.Add(new SqlParameter { ParameterName = "@pIdMateria", SqlDbType = System.Data.SqlDbType.Int, Value = GrupoMateria.IdMateria});
+            parametros.Add(new SqlParameter { ParameterName = "@pUsuario", SqlDbType = System.Data.SqlDbType.Int, Value = 1 });
 
             try
             {
-                dac.ExecuteNonQuery("sp_insert_carreras", parametros);
+                DataSet ds = dac.Fill("sp_insert_grupomaterias", parametros);
+                mensaje = ds.Tables[0].AsEnumerable().Select(dataRow => dataRow["mensaje"].ToString()).ToList()[0];
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            
+            return mensaje;
         }
 
-        public void UpdateCarrera(UpdateCarreraModel carrera)
+        public string UpdateGrupoMateria(UpdateGrupoMateriaModel GrupoMateria)
         {
             ConexionDataAccess dac = new ConexionDataAccess(connection);
             parametros = new ArrayList();
             string mensaje;
 
 
-            parametros.Add(new SqlParameter { ParameterName = "@pId", SqlDbType = System.Data.SqlDbType.VarChar, Value = carrera.Id });
-            parametros.Add(new SqlParameter { ParameterName = "@pCarrera", SqlDbType = System.Data.SqlDbType.VarChar, Value = carrera.NombreCarrera });
-            parametros.Add(new SqlParameter { ParameterName = "@pAbreviatura", SqlDbType = System.Data.SqlDbType.VarChar, Value = carrera.Abreviatura });
-            parametros.Add(new SqlParameter { ParameterName = "@pUsuarioRegistra", SqlDbType = System.Data.SqlDbType.Int, Value = 1});
+            parametros.Add(new SqlParameter { ParameterName = "@pId", SqlDbType = System.Data.SqlDbType.Int, Value = GrupoMateria.Id });
+            parametros.Add(new SqlParameter { ParameterName = "@pIdGrupo", SqlDbType = System.Data.SqlDbType.Int, Value = GrupoMateria.IdGrupo });
+            parametros.Add(new SqlParameter { ParameterName = "@pIdMateria", SqlDbType = System.Data.SqlDbType.Int, Value = GrupoMateria.IdMateria});
+            parametros.Add(new SqlParameter { ParameterName = "@pUsuario", SqlDbType = System.Data.SqlDbType.Int, Value = 1});
 
             try
             {
-                dac.ExecuteNonQuery("sp_update_carreras", parametros);
-               
+                DataSet ds = dac.Fill("sp_update_grupomaterias", parametros);
+                mensaje = ds.Tables[0].AsEnumerable().Select(dataRow => dataRow["mensaje"].ToString()).ToList()[0];
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            
+            return mensaje;
         }
 
-        public void DeleteCarrera(int id)
+        public void DeleteGrupoMateria(int id)
         {
             ConexionDataAccess dac = new ConexionDataAccess(connection);
             parametros = new ArrayList();
@@ -118,7 +119,7 @@ namespace reportesApi.Services
 
             try
             {
-                dac.ExecuteNonQuery("sp_delete_carreras", parametros);
+                dac.ExecuteNonQuery("sp_delete_grupomaterias", parametros);
             }
             catch (Exception ex)
             {
