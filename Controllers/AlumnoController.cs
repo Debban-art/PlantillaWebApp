@@ -67,6 +67,8 @@ namespace reportesApi.Controllers
         public IActionResult GetAlumnos()
         {
             var objectResponse = Helper.GetStructResponse();
+            var resultado = _AlumnoService.GetAlumnos();
+
             try
             {
                 objectResponse.StatusCode = (int)HttpStatusCode.OK;
@@ -76,7 +78,6 @@ namespace reportesApi.Controllers
 
                 // Llamando a la función y recibiendo los dos valores.
                 
-                 var resultado = _AlumnoService.GetAlumnos();
                  objectResponse.response = resultado;
             }
 
@@ -110,8 +111,8 @@ namespace reportesApi.Controllers
             return new JsonResult(objectResponse);
         }
 
-        [HttpDelete("DeleteAlumno")]
-        public IActionResult DeleteAlumno([FromBody] int id )
+        [HttpDelete("DeleteAlumno/{id}")]
+        public IActionResult DeleteAlumno([FromRoute] int id )
         {
             var objectResponse = Helper.GetStructResponse();
             try
