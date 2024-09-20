@@ -34,8 +34,6 @@ namespace reportesApi.Services
                     {
                         usuario.NombreUsuario = row["NombreUsuario"].ToString();
                         usuario.NombrePersona = row["NombrePersona"].ToString();
-                       
-                        
                         usuario.Id = int.Parse(row["Id"].ToString());
                         
                     
